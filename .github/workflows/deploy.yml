@@ -25,6 +25,8 @@ jobs:
 
       - name: Configure AWS Credentials and terraform version
         uses: ./.github/actions/setup-terraform
+        with:
+          aws-role-arn: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
       - name: Terraform Init
         run: terraform -chdir=infra/global/backend init
@@ -51,6 +53,8 @@ jobs:
           
       - name: Configure AWS Credentials and terraform version
         uses: ./.github/actions/setup-terraform
+        with:
+          aws-role-arn: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
       - name: Terraform Init
         run: terraform -chdir=infra/environments/dev init
