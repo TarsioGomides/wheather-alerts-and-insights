@@ -20,18 +20,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Debug files
-        run: |
-          echo "Cehck directory structure:"
-          ls -la .github/actions
-          ls -la .github/actions/setup-terraform
-          echo "------------------------------"
 
       - name: Configure AWS Credentials and terraform version
-        uses: ./.github/actions/setup-terraform@master
+        uses: ./.github/actions/setup-terraform@v1
 
       - name: Terraform Init
         run: terraform -chdir=infra/global/backend init
@@ -57,7 +48,7 @@ jobs:
           fetch-depth: 0
 
       - name: Configure AWS Credentials and terraform version
-        uses: ./.github/actions/setup-terraform@master
+        uses: ./.github/actions/setup-terraform@v1
 
       - name: Terraform Init
         run: terraform -chdir=infra/environments/dev init
