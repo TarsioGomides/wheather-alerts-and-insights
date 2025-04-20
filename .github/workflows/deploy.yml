@@ -23,6 +23,13 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Debug files
+        run: |
+          echo "Cehck directory structure:"
+          ls -la .github/actions
+          ls -la .github/actions/setup-terraform
+          echo "------------------------------"
+
       - name: Configure AWS Credentials and terraform version
         uses: ./.github/actions/setup-terraform@master
 
