@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0  
 
       - name: Configure AWS Credentials and terraform version
-        uses: ./.github/actions/setup-terraform@v1
+        uses: ./.github/actions/setup-terraform
 
       - name: Terraform Init
         run: terraform -chdir=infra/global/backend init
@@ -50,7 +50,7 @@ jobs:
           fetch-depth: 0
           
       - name: Configure AWS Credentials and terraform version
-        uses: ./.github/actions/setup-terraform@v1
+        uses: ./.github/actions/setup-terraform
 
       - name: Terraform Init
         run: terraform -chdir=infra/environments/dev init
