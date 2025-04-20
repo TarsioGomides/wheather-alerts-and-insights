@@ -1,0 +1,57 @@
+name: Terraform Deploy
+
+on:
+  push:
+    branches: [ "master" ]
+
+env:
+  AWS_REGION: sa-east-1
+  AWS_ROLE_ARN: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+  TF_VERSION: 1.5.0
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy_backend:
+    name: Deploy Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup-terraform/action.yml@master
+
+      - name: Terraform Init
+        run: terraform -chdir=infra/global/backend init
+
+      - name: Terraform Validate
+        run: terraform -chdir=infra/global/backend validate
+
+      - name: Terraform Plan
+        run: terraform -chdir=infra/global/backend plan -input=false -var="project_name=meuprojeto"
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master'
+        run: terraform -chdir=infra/global/backend apply -auto-approve -input=false -var="project_name=meuprojeto"
+
+  deploy_infra:
+    name: Deploy Infra
+    needs: deploy_backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./.github/actions/setup-terraform/action.yml@master
+
+      - name: Terraform Init
+        run: terraform -chdir=infra/environments/dev init
+
+      - name: Terraform Format
+        run: terraform -chdir=infra/environments/dev fmt -check
+
+      - name: Terraform Validate
+        run: terraform -chdir=infra/environments/dev validate
+
+      - name: Terraform Plan
+        run: terraform -chdir=infra/environments/dev plan -input=false
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master'
+        run: terraform -chdir=infra/environments/dev apply -auto-approve -input=false
