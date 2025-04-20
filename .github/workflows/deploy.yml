@@ -18,7 +18,7 @@ jobs:
     name: Deploy Backend
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup-terraform/action.yml@master
+      - uses: ./.github/actions/setup-terraform.yml@master
 
       - name: Terraform Init
         run: terraform -chdir=infra/global/backend init
@@ -38,7 +38,7 @@ jobs:
     needs: deploy_backend
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup-terraform/action.yml@master
+      - uses: ./.github/actions/setup-terraform.yml@master
 
       - name: Terraform Init
         run: terraform -chdir=infra/environments/dev init
