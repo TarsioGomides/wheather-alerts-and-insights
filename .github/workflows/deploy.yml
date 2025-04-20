@@ -18,7 +18,11 @@ jobs:
     name: Deploy Backend
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup-terraform@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials and terraform version
+        uses: ./.github/actions/setup-terraform@master
 
       - name: Terraform Init
         run: terraform -chdir=infra/global/backend init
@@ -38,7 +42,11 @@ jobs:
     needs: deploy_backend
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/actions/setup-terraform@master
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials and terraform version
+        uses: ./.github/actions/setup-terraform@master
 
       - name: Terraform Init
         run: terraform -chdir=infra/environments/dev init
