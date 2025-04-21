@@ -28,7 +28,7 @@ jobs:
         with:
           aws-role-arn: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
-      - name: Terraform Init (forçando backend remoto)
+      - name: Terraform Init
         run: |
           terraform -chdir=infra/global/backend init \
             -reconfigure \
