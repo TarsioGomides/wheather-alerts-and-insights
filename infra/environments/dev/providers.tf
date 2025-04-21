@@ -7,10 +7,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket         = module.backend.s3_bucket_name
+    bucket         = "terraform-state-wheather-alerts-and-insights"
     key            = "dev/terraform.tfstate"
     region         = "sa-east-1"
-    dynamodb_table = module.backend.dynamodb_table_name
+    dynamodb_table = "terraform-locks-wheather-alerts-and-insights"
     encrypt        = true
   }
 }
