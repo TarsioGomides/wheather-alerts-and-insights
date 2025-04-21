@@ -35,11 +35,11 @@ jobs:
         run: terraform -chdir=infra/global/backend validate
 
       - name: Terraform Plan
-        run: terraform -chdir=infra/global/backend plan -input=false -var="project_name=meuprojeto"
+        run: terraform -chdir=infra/global/backend plan -input=false"
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/master'
-        run: terraform -chdir=infra/global/backend apply -auto-approve -input=false -var="project_name=meuprojeto"
+        run: terraform -chdir=infra/global/backend apply -auto-approve -input=false"
 
   deploy_infra:
     name: Deploy Infra
