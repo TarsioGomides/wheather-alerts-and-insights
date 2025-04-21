@@ -28,18 +28,14 @@ jobs:
         with:
           aws-role-arn: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
-      - name: Terraform Init
-        run: terraform -chdir=infra/global/backend init
-
-      - name: Debug Terraform Init
+      - name: Terraform Init (forçando backend remoto)
         run: |
-          terraform -chdir=infra/global/backend providers
-          echo "---"
-          cat infra/global/backend/.terraform/terraform.tfstate 2>/dev/null || echo "Sem estado local"
-
-      - name: Verifica backend usado
-        run: |
-          terraform -chdir=infra/global/backend show -no-color | grep "terraform-state-wheather-alerts"
+          terraform -chdir=infra/global/backend init \
+            -backend-config="bucket=terraform-state-wheather-alerts-and-insights" \
+            -backend-config="key=dev/terraform.tfstate" \
+            -backend-config="region=sa-east-1" \
+            -backend-config="dynamodb_table=terraform-locks-wheather-alerts-and-insights" \
+            -backend-config="encrypt=true"
 
       - name: Terraform Validate
         run: terraform -chdir=infra/global/backend validate
