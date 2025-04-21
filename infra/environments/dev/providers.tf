@@ -17,9 +17,6 @@ terraform {
 
 provider "aws" {
   region = "sa-east-1"
-  assume_role {
-    role_arn = module.iam.terraform_role_arn
-  }
 }
 
 module "backend" {
