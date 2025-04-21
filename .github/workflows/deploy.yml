@@ -30,7 +30,14 @@ jobs:
 
       - name: Terraform Init
         run: |
-          terraform -chdir=infra/global/backend init -reconfigure -input=false
+          terraform -chdir=infra/global/backend init \
+            -reconfigure \
+            -lock=false
+            -backend-config="bucket=terraform-state-wheather-alerts-and-insights" \
+            -backend-config="key=dev/terraform.tfstate" \
+            -backend-config="region=sa-east-1" \
+            -backend-config="dynamodb_table=terraform-locks-wheather-alerts-and-insights" \
+            -backend-config="encrypt=true"
 
       - name: Terraform Validate
         run: terraform -chdir=infra/global/backend validate

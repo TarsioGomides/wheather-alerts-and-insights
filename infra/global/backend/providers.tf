@@ -6,13 +6,7 @@ terraform {
     }
   }
 
-  backend "s3" {
-    bucket         = "terraform-state-wheather-alerts-and-insights"
-    key            = "dev/terraform.tfstate"
-    region         = "sa-east-1"
-    dynamodb_table = "terraform-locks-wheather-alerts-and-insights"
-    encrypt        = true
-  }
+  backend "s3" {}
 }
 
 provider "aws" {
