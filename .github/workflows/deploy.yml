@@ -31,6 +31,7 @@ jobs:
       - name: Terraform Init (forçando backend remoto)
         run: |
           terraform -chdir=infra/global/backend init \
+            -reconfigure \
             -backend-config="bucket=terraform-state-wheather-alerts-and-insights" \
             -backend-config="key=dev/terraform.tfstate" \
             -backend-config="region=sa-east-1" \
