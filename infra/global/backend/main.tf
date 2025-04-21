@@ -1,8 +1,8 @@
 resource "aws_s3_bucket" "terraform_state" {
-  bucket = "terraform-state-${var.project_name}-${random_id.suffix.hex}"
+  bucket = "terraform-state-${var.project_name}"
   
   lifecycle {
-    prevent_destroy = true  # Evita deleção acidental
+    prevent_destroy = true
   }
 }
 
@@ -30,6 +30,11 @@ resource "aws_dynamodb_table" "terraform_locks" {
   attribute {
     name = "LockID"
     type = "S"
+  }
+
+  lifecycle {
+    prevent_destroy = true
+    ignore_changes = [name]
   }
 }
 

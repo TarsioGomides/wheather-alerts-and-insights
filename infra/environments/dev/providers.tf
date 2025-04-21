@@ -9,7 +9,7 @@ terraform {
   backend "s3" {
     bucket         = module.backend.s3_bucket_name
     key            = "dev/terraform.tfstate"
-    region         = "us-east-1"
+    region         = "sa-east-1"
     dynamodb_table = module.backend.dynamodb_table_name
     encrypt        = true
   }
@@ -24,13 +24,13 @@ provider "aws" {
 
 module "backend" {
   source       = "../../global/backend"
-  project_name = "meuprojeto"
+  project_name = "wheather-alerts-and-insights"
 }
 
 module "iam" {
   source            = "../../global/iam"
   oidc_provider_arn = "arn:aws:iam::${var.aws_account_id}:oidc-provider/token.actions.githubusercontent.com"
-  github_org        = var.github_org  # Defina essa variável em variables.tf ou no TF_VAR
-  github_repo       = var.github_repo # Defina essa variável em variables.tf ou no TF_VAR
+  github_org        = var.github_org
+  github_repo       = var.github_repo
   aws_account_id    = var.aws_account_id
 }
