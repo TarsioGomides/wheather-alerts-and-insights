@@ -31,6 +31,12 @@ jobs:
       - name: Terraform Init
         run: terraform -chdir=infra/global/backend init
 
+      - name: Debug Terraform Init
+        run: |
+          terraform -chdir=infra/global/backend providers
+          echo "---"
+          cat infra/global/backend/.terraform/terraform.tfstate 2>/dev/null || echo "Sem estado local"
+
       - name: Terraform Validate
         run: terraform -chdir=infra/global/backend validate
 
