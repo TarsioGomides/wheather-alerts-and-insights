@@ -37,6 +37,10 @@ jobs:
           echo "---"
           cat infra/global/backend/.terraform/terraform.tfstate 2>/dev/null || echo "Sem estado local"
 
+      - name: Verifica backend usado
+        run: |
+          terraform -chdir=infra/global/backend show -no-color | grep "terraform-state-wheather-alerts"
+
       - name: Terraform Validate
         run: terraform -chdir=infra/global/backend validate
 
