@@ -32,7 +32,7 @@ jobs:
         run: |
           terraform -chdir=infra/global/backend init \
             -reconfigure \
-            -lock=false
+            -lock=false \
             -backend-config="bucket=terraform-state-wheather-alerts-and-insights" \
             -backend-config="key=dev/terraform.tfstate" \
             -backend-config="region=sa-east-1" \
